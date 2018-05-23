@@ -25,7 +25,7 @@ public class App implements Runnable {
 	}
 	
 	public void run() {
-		Map<String, String> properties = getProperties();
+		Map<String, String> properties = createProperties();
 
 		MemoryConfigurationProvider provider = new MemoryConfigurationProvider(agentName, properties);
 		MaterializedConfiguration configuration = provider.getConfiguration();
@@ -83,7 +83,7 @@ public class App implements Runnable {
 		}
 	}
 	
-	public Map<String, String> getProperties() {
+	public Map<String, String> createProperties() {
 		Map<String, String> properties = new HashMap<String, String>();
 
 		String sourceName  = "source";
