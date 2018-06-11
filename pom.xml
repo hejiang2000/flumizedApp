@@ -121,8 +121,8 @@
 				</dependencies>
 				<executions>
 					<execution>
-						<id>checkstyle</id>
-						<phase>verify</phase>
+						<id>validate-checkstyle</id>
+						<phase>validate</phase>
 						<configuration>
 							<configLocation>${project.basedir}/checkstyle/checkstyle.xml</configLocation>
 							<suppressionsLocation>${project.basedir}/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
@@ -162,6 +162,7 @@
 				<executions>
 					<execution>
 						<id>pre-unit-test</id>
+						<phase>process-test-classes</phase>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>

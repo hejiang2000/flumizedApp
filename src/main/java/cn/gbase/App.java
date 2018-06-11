@@ -37,28 +37,31 @@ public class App implements Runnable {
   }
 
   Map<String, String> buildProperties() {
-    Map<String, String> properties = new HashMap<String, String>();
+    final Map<String, String> properties = new HashMap<>();
 
-    String sourceName = "source";
-    String channelName = "channel";
-    String sinkName = "sink";
+    final String sourceName = "source";
+    final String channelName = "channel";
+    final String sinkName = "sink";
+
+    final String agentSourcePropPrefix = agentName + ".sources." + sourceName;
+    final String agentSinkPropPrefix = agentName + ".sinks." + sinkName;
+    final String agentChannelPropPrefix = agentName + ".channels." + channelName;
 
     properties.put(agentName + ".sources", sourceName);
     properties.put(agentName + ".channels", channelName);
     properties.put(agentName + ".sinks", sinkName);
 
-    properties.put(agentName + ".sources." + sourceName + ".channels", channelName);
-    properties.put(agentName + ".sinks." + sinkName + ".channel", channelName);
+    properties.put(agentSourcePropPrefix + ".channels", channelName);
+    properties.put(agentSinkPropPrefix + ".channel", channelName);
 
-    properties.put(agentName + ".sources." + sourceName + ".type",
-        "org.apache.flume.source.StressSource");
-    properties.put(agentName + ".sources." + sourceName + ".size", "500");
-    properties.put(agentName + ".sources." + sourceName + ".maxTotalEvents", "10");
+    properties.put(agentSourcePropPrefix + ".type", "org.apache.flume.source.StressSource");
+    properties.put(agentSourcePropPrefix + ".size", "500");
+    properties.put(agentSourcePropPrefix + ".maxTotalEvents", "10");
 
-    properties.put(agentName + ".channels." + channelName + ".type", "memory");
-    properties.put(agentName + ".channels." + channelName + ".capacity", "200");
+    properties.put(agentChannelPropPrefix + ".type", "memory");
+    properties.put(agentChannelPropPrefix + ".capacity", "200");
 
-    properties.put(agentName + ".sinks." + sinkName + ".type", "logger");
+    properties.put(agentSinkPropPrefix + ".type", "logger");
 
     return properties;
   }
