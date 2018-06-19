@@ -86,6 +86,20 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
+		<!--
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		-->
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>

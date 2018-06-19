@@ -1,8 +1,11 @@
 package cn.gbase;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import org.apache.flume.Channel;
 import org.apache.flume.Event;
@@ -28,7 +31,7 @@ public class App implements Runnable {
   }
 
   public void run() {
-    MaterializedConfiguration configuration = buildConfiguration(agentName, buildProperties());
+    MaterializedConfiguration configuration = buildConfiguration(agentName, loadProperties());
     startApplication(configuration);
 
     if (waitForChannelsEmpty(configuration, channelsEmptyCheckCount, channelsEmptyCheckDelaySec)) {
@@ -64,6 +67,19 @@ public class App implements Runnable {
     properties.put(agentSinkPropPrefix + ".type", "logger");
 
     return properties;
+  }
+
+  @SuppressWarnings("unchecked")
+  Map<String, String> loadProperties() {
+    InputStream stream = getClass().getResourceAsStream("/app.conf");
+    Properties props = new Properties();
+    try {
+      props.load(stream);
+    } catch (IOException e) {
+      logger.error(e.getMessage(), e);
+    }
+    
+    return (Map<String, String>)(Map<?,?>)props;
   }
 
   MaterializedConfiguration buildConfiguration(String agentName, Map<String, String> properties) {
